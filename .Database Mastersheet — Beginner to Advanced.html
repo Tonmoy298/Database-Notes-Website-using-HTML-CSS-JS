@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///C:/Users/user/Downloads/database-mastersheet_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Database Mastersheet — Beginner to Advanced</title>
+<link href="./.Database Mastersheet — Beginner to Advanced_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #1a1d26;
+    --border: #2a2d3a;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --accent4: #f59e0b;
+    --accent5: #ef4444;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --code-bg: #0d1117;
+    --keyword: #ff79c6;
+    --func: #50fa7b;
+    --string: #f1fa8c;
+    --comment: #6272a4;
+    --type: #8be9fd;
+    --number: #bd93f9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0d1117 0%, #1a1d26 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: 80px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(90deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .header-sub {
+    color: var(--text-dim);
+    font-size: 15px;
+    font-weight: 400;
+    max-width: 560px;
+  }
+  .header-badges {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+  }
+  .badge-cyan { background: rgba(0,229,255,0.1); color: var(--accent); border: 1px solid rgba(0,229,255,0.3); }
+  .badge-purple { background: rgba(124,58,237,0.1); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); }
+  .badge-green { background: rgba(16,185,129,0.1); color: var(--accent3); border: 1px solid rgba(16,185,129,0.3); }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 180px);
+  }
+
+  /* ── SIDEBAR ── */
+  nav {
+    width: 260px;
+    min-width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .nav-section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 20px 6px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 500;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-item:hover, .nav-item.active {
+    color: var(--text);
+    background: rgba(0,229,255,0.05);
+    border-left-color: var(--accent);
+  }
+  .nav-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN CONTENT ── */
+  main {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    max-width: 960px;
+  }
+
+  .section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(0,229,255,0.3); }
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .icon { font-size: 18px; }
+  .card p {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 14px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .kw { color: var(--keyword); font-weight: 600; }
+  .fn { color: var(--func); }
+  .st { color: var(--string); }
+  .cm { color: var(--comment); font-style: italic; }
+  .ty { color: var(--type); }
+  .nm { color: var(--number); }
+  .acc { color: var(--accent); }
+
+  /* ── TABLES ── */
+  .table-wrap { overflow-x: auto; margin: 14px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(42,45,58,0.5);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: rgba(0,229,255,0.07);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* ── TIPS ── */
+  .tip {
+    border-left: 3px solid var(--accent3);
+    background: rgba(16,185,129,0.05);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .tip strong { color: var(--accent3); }
+  .warn {
+    border-left: 3px solid var(--accent4);
+    background: rgba(245,158,11,0.05);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .warn strong { color: var(--accent4); }
+  .danger {
+    border-left: 3px solid var(--accent5);
+    background: rgba(239,68,68,0.05);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .danger strong { color: var(--accent5); }
+
+  /* ── TAGS ── */
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .tag-cyan { background: rgba(0,229,255,0.1); color: var(--accent); }
+  .tag-green { background: rgba(16,185,129,0.1); color: var(--accent3); }
+  .tag-amber { background: rgba(245,158,11,0.1); color: var(--accent4); }
+  .tag-red { background: rgba(239,68,68,0.1); color: var(--accent5); }
+  .tag-purple { background: rgba(124,58,237,0.1); color: #a78bfa; }
+
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin: 22px 0 10px;
+  }
+  h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    margin: 18px 0 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── PROGRESS DOTS ── */
+  .level-dots {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .level-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .level-dot.filled { background: var(--accent); }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">// complete reference guide</div>
+  <h1>Database Mastersheet</h1>
+  <p class="header-sub">Beginner থেকে Advanced — সব কিছু এক জায়গায়। Interview ready, Project ready.</p>
+  <div class="header-badges">
+    <span class="badge badge-cyan">SQL</span>
+    <span class="badge badge-purple">Joins &amp; Subqueries</span>
+    <span class="badge badge-green">Normalization</span>
+    <span class="badge badge-cyan">Transactions</span>
+    <span class="badge badge-purple">Indexing</span>
+    <span class="badge badge-green">Advanced</span>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- ── SIDEBAR ── -->
+<nav>
+  <div class="nav-section-title">Beginner</div>
+  <div class="nav-item active" onclick="show(&#39;intro&#39;)"><span class="dot" style="background:#00e5ff"></span>Database কী?</div>
+  <div class="nav-item" onclick="show(&#39;datatypes&#39;)"><span class="dot" style="background:#00e5ff"></span>Data Types</div>
+  <div class="nav-item" onclick="show(&#39;ddl&#39;)"><span class="dot" style="background:#00e5ff"></span>DDL — CREATE, ALTER, DROP</div>
+  <div class="nav-item" onclick="show(&#39;dml&#39;)"><span class="dot" style="background:#00e5ff"></span>DML — INSERT, UPDATE, DELETE</div>
+  <div class="nav-item" onclick="show(&#39;select&#39;)"><span class="dot" style="background:#00e5ff"></span>SELECT &amp; Filtering</div>
+
+  <div class="nav-section-title">Intermediate</div>
+  <div class="nav-item" onclick="show(&#39;joins&#39;)"><span class="dot" style="background:#a78bfa"></span>JOINs</div>
+  <div class="nav-item" onclick="show(&#39;aggregate&#39;)"><span class="dot" style="background:#a78bfa"></span>Aggregate Functions</div>
+  <div class="nav-item" onclick="show(&#39;groupby&#39;)"><span class="dot" style="background:#a78bfa"></span>GROUP BY &amp; HAVING</div>
+  <div class="nav-item" onclick="show(&#39;subquery&#39;)"><span class="dot" style="background:#a78bfa"></span>Subquery</div>
+  <div class="nav-item" onclick="show(&#39;constraints&#39;)"><span class="dot" style="background:#a78bfa"></span>Constraints &amp; Keys</div>
+  <div class="nav-item" onclick="show(&#39;normalization&#39;)"><span class="dot" style="background:#a78bfa"></span>Normalization</div>
+
+  <div class="nav-section-title">Advanced</div>
+  <div class="nav-item" onclick="show(&#39;index&#39;)"><span class="dot" style="background:#10b981"></span>Indexing</div>
+  <div class="nav-item" onclick="show(&#39;views&#39;)"><span class="dot" style="background:#10b981"></span>Views &amp; CTE</div>
+  <div class="nav-item" onclick="show(&#39;transactions&#39;)"><span class="dot" style="background:#10b981"></span>Transactions &amp; ACID</div>
+  <div class="nav-item" onclick="show(&#39;stored&#39;)"><span class="dot" style="background:#10b981"></span>Stored Procedures</div>
+  <div class="nav-item" onclick="show(&#39;triggers&#39;)"><span class="dot" style="background:#10b981"></span>Triggers</div>
+  <div class="nav-item" onclick="show(&#39;window&#39;)"><span class="dot" style="background:#10b981"></span>Window Functions</div>
+  <div class="nav-item" onclick="show(&#39;nosql&#39;)"><span class="dot" style="background:#10b981"></span>SQL vs NoSQL</div>
+  <div class="nav-item" onclick="show(&#39;interview&#39;)"><span class="dot" style="background:#f59e0b"></span>⚡ Interview Q&amp;A</div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 — INTRO
+══════════════════════════════════════════════ -->
+<section class="section active" id="intro">
+  <div class="section-header">
+    <div class="section-label">01 / Beginner</div>
+    <div class="section-title">Database কী?</div>
+    <div class="section-desc">Database হলো structured data সংরক্ষণের জায়গা। সহজ ভাষায় — অনেক Excel sheet কিন্তু অনেক বেশি powerful।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗄️</span>Database এর ধরন</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>ধরন</th><th>উদাহরণ</th><th>কখন ব্যবহার</th></tr>
+        <tr><td><strong>Relational (SQL)</strong></td><td>MySQL, PostgreSQL, SQLite, MSSQL</td><td>Structured data, relations আছে</td></tr>
+        <tr><td><strong>Document</strong></td><td>MongoDB, CouchDB</td><td>Flexible schema, JSON data</td></tr>
+        <tr><td><strong>Key-Value</strong></td><td>Redis, DynamoDB</td><td>Cache, session, fast lookup</td></tr>
+        <tr><td><strong>Column</strong></td><td>Cassandra, HBase</td><td>Big data, analytics</td></tr>
+        <tr><td><strong>Graph</strong></td><td>Neo4j</td><td>Social network, relationships</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span>RDBMS এর মূল ধারণা</div>
+    <div class="grid2">
+      <div>
+        <h4>Table (Relation)</h4>
+        <p>Row এবং Column দিয়ে তৈরি। প্রতিটি Table একটি entity represent করে।</p>
+        <div class="code-block">
+<span class="cm">-- users table</span>
+<span class="ty">id</span> | <span class="ty">name</span>  | <span class="ty">email</span>
+----|-------|------
+<span class="nm">1</span>  | Rahim | r@x.com
+<span class="nm">2</span>  | Karim | k@x.com
+        </div>
+      </div>
+      <div>
+        <h4>Key Concepts</h4>
+        <p><strong style="color:#fff">Row / Tuple</strong> — একটি record</p>
+        <p><strong style="color:#fff">Column / Attribute</strong> — একটি field</p>
+        <p><strong style="color:#fff">Primary Key</strong> — unique identifier</p>
+        <p><strong style="color:#fff">Foreign Key</strong> — অন্য table এর reference</p>
+        <p><strong style="color:#fff">Schema</strong> — table এর structure</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔤</span>SQL এর ভাগ</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Category</th><th>Commands</th><th>কাজ</th></tr>
+        <tr><td><code>DDL</code></td><td>CREATE, ALTER, DROP, TRUNCATE</td><td>Structure তৈরি/পরিবর্তন</td></tr>
+        <tr><td><code>DML</code></td><td>INSERT, UPDATE, DELETE, SELECT</td><td>Data manipulation</td></tr>
+        <tr><td><code>DCL</code></td><td>GRANT, REVOKE</td><td>Permission control</td></tr>
+        <tr><td><code>TCL</code></td><td>COMMIT, ROLLBACK, SAVEPOINT</td><td>Transaction control</td></tr>
+      </tbody></table>
+    </div>
+    <div class="tip"><strong>💡 মনে রাখো:</strong> DDL = ঘর বানানো। DML = ঘরে জিনিস রাখা/সরানো।</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 — DATA TYPES
+══════════════════════════════════════════════ -->
+<section class="section" id="datatypes">
+  <div class="section-header">
+    <div class="section-label">02 / Beginner</div>
+    <div class="section-title">Data Types</div>
+    <div class="section-desc">Column এ কোন ধরনের data রাখবো সেটা নির্ধারণ করে data type।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔢</span>Numeric Types</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Type</th><th>Range / Size</th><th>ব্যবহার</th></tr>
+        <tr><td><code>TINYINT</code></td><td>-128 to 127</td><td>Boolean এর মতো ছোট number</td></tr>
+        <tr><td><code>INT</code></td><td>-2B to 2B</td><td>ID, count, age</td></tr>
+        <tr><td><code>BIGINT</code></td><td>খুব বড়</td><td>Phone number, large IDs</td></tr>
+        <tr><td><code>DECIMAL(p,s)</code></td><td>Exact precision</td><td>টাকা/price (float এড়াও!)</td></tr>
+        <tr><td><code>FLOAT</code></td><td>Approximate</td><td>Scientific data</td></tr>
+      </tbody></table>
+    </div>
+    <div class="danger"><strong>⚠️ সতর্কতা:</strong> টাকার হিসাবে কখনো FLOAT ব্যবহার করো না — precision error হয়। সবসময় DECIMAL ব্যবহার করো।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📝</span>String Types</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Type</th><th>Max Size</th><th>কখন ব্যবহার</th></tr>
+        <tr><td><code>CHAR(n)</code></td><td>255 chars</td><td>Fixed length — যেমন country code 'BD'</td></tr>
+        <tr><td><code>VARCHAR(n)</code></td><td>65535 chars</td><td>Variable length — name, email</td></tr>
+        <tr><td><code>TEXT</code></td><td>65535 bytes</td><td>Long content — description, bio</td></tr>
+        <tr><td><code>LONGTEXT</code></td><td>4GB</td><td>Blog post, article</td></tr>
+        <tr><td><code>ENUM</code></td><td>—</td><td>Fixed set — 'male', 'female'</td></tr>
+      </tbody></table>
+    </div>
+    <div class="tip"><strong>💡 CHAR vs VARCHAR:</strong> CHAR সবসময় fixed space নেয়, VARCHAR শুধু যতটুকু দরকার। তাই VARCHAR বেশি efficient।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📅</span>Date &amp; Time Types</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Type</th><th>Format</th><th>ব্যবহার</th></tr>
+        <tr><td><code>DATE</code></td><td>YYYY-MM-DD</td><td>জন্মতারিখ</td></tr>
+        <tr><td><code>TIME</code></td><td>HH:MM:SS</td><td>কাজের সময়</td></tr>
+        <tr><td><code>DATETIME</code></td><td>YYYY-MM-DD HH:MM:SS</td><td>Order placed time</td></tr>
+        <tr><td><code>TIMESTAMP</code></td><td>Unix time based</td><td>created_at, updated_at</td></tr>
+        <tr><td><code>YEAR</code></td><td>YYYY</td><td>শুধু বছর</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 — DDL
+══════════════════════════════════════════════ -->
+<section class="section" id="ddl">
+  <div class="section-header">
+    <div class="section-label">03 / Beginner</div>
+    <div class="section-title">DDL — CREATE, ALTER, DROP</div>
+    <div class="section-desc">Data Definition Language — database এর structure তৈরি এবং পরিবর্তন করার জন্য।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🏗️</span>CREATE TABLE</div>
+    <div class="code-label">syntax + example</div>
+    <div class="code-block">
+<span class="cm">-- Database তৈরি</span>
+<span class="kw">CREATE DATABASE</span> ecommerce;
+<span class="kw">USE</span> ecommerce;
+
+<span class="cm">-- Table তৈরি</span>
+<span class="kw">CREATE TABLE</span> <span class="fn">users</span> (
+  id         <span class="ty">INT</span>          <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+  name       <span class="ty">VARCHAR</span>(<span class="nm">100</span>) <span class="kw">NOT NULL</span>,
+  email      <span class="ty">VARCHAR</span>(<span class="nm">150</span>) <span class="kw">UNIQUE NOT NULL</span>,
+  age        <span class="ty">TINYINT</span>      <span class="kw">DEFAULT</span> <span class="nm">18</span>,
+  created_at <span class="ty">TIMESTAMP</span>    <span class="kw">DEFAULT</span> <span class="fn">CURRENT_TIMESTAMP</span>
+);
+    </div>
+
+    <div class="code-label">products table</div>
+    <div class="code-block">
+<span class="kw">CREATE TABLE</span> <span class="fn">products</span> (
+  id          <span class="ty">INT</span>            <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+  name        <span class="ty">VARCHAR</span>(<span class="nm">200</span>)  <span class="kw">NOT NULL</span>,
+  price       <span class="ty">DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>) <span class="kw">NOT NULL</span>,
+  stock       <span class="ty">INT</span>            <span class="kw">DEFAULT</span> <span class="nm">0</span>,
+  category_id <span class="ty">INT</span>,
+  <span class="kw">FOREIGN KEY</span> (category_id) <span class="kw">REFERENCES</span> categories(id)
+);
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">✏️</span>ALTER TABLE</div>
+    <div class="code-block">
+<span class="cm">-- নতুন column যোগ</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">ADD COLUMN</span> phone <span class="ty">VARCHAR</span>(<span class="nm">20</span>);
+
+<span class="cm">-- Column এর type পরিবর্তন</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">MODIFY COLUMN</span> phone <span class="ty">VARCHAR</span>(<span class="nm">15</span>) <span class="kw">NOT NULL</span>;
+
+<span class="cm">-- Column rename</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">RENAME COLUMN</span> phone <span class="kw">TO</span> mobile;
+
+<span class="cm">-- Column delete</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">DROP COLUMN</span> mobile;
+
+<span class="cm">-- Primary Key যোগ</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">ADD PRIMARY KEY</span>(id);
+
+<span class="cm">-- Index যোগ</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">ADD INDEX</span> idx_email (email);
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗑️</span>DROP vs TRUNCATE vs DELETE</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Command</th><th>কী করে</th><th>Rollback?</th><th>Structure?</th></tr>
+        <tr><td><code>DROP TABLE</code></td><td>Table সহ সব মুছে</td><td>❌</td><td>মুছে যায়</td></tr>
+        <tr><td><code>TRUNCATE</code></td><td>সব data মুছে, structure রাখে</td><td>❌</td><td>থাকে</td></tr>
+        <tr><td><code>DELETE</code></td><td>Condition দিয়ে data মুছে</td><td>✅</td><td>থাকে</td></tr>
+      </tbody></table>
+    </div>
+    <div class="code-block">
+<span class="kw">DROP TABLE</span> users;          <span class="cm">-- table ই নেই</span>
+<span class="kw">TRUNCATE TABLE</span> users;     <span class="cm">-- data নেই, table আছে</span>
+<span class="kw">DELETE FROM</span> users <span class="kw">WHERE</span> id = <span class="nm">5</span>; <span class="cm">-- শুধু id=5 মুছবে</span>
+    </div>
+    <div class="warn"><strong>⚡ Interview tip:</strong> TRUNCATE faster কারণ এটা DDL, transaction log লেখে না। DELETE DML, log লেখে তাই rollback করা যায়।</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4 — DML
+══════════════════════════════════════════════ -->
+<section class="section" id="dml">
+  <div class="section-header">
+    <div class="section-label">04 / Beginner</div>
+    <div class="section-title">DML — INSERT, UPDATE, DELETE</div>
+    <div class="section-desc">Data Manipulation Language — data রাখা, পরিবর্তন এবং মুছার জন্য।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">➕</span>INSERT</div>
+    <div class="code-block">
+<span class="cm">-- একটি row</span>
+<span class="kw">INSERT INTO</span> users (name, email, age)
+<span class="kw">VALUES</span> (<span class="st">'Rahim'</span>, <span class="st">'rahim@gmail.com'</span>, <span class="nm">25</span>);
+
+<span class="cm">-- একসাথে অনেক row</span>
+<span class="kw">INSERT INTO</span> users (name, email, age) <span class="kw">VALUES</span>
+  (<span class="st">'Karim'</span>, <span class="st">'karim@gmail.com'</span>, <span class="nm">30</span>),
+  (<span class="st">'Sumon'</span>, <span class="st">'sumon@gmail.com'</span>, <span class="nm">22</span>),
+  (<span class="st">'Rima'</span>,  <span class="st">'rima@gmail.com'</span>,  <span class="nm">28</span>);
+
+<span class="cm">-- অন্য table থেকে data নিয়ে insert</span>
+<span class="kw">INSERT INTO</span> users_backup
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> age &gt; <span class="nm">25</span>;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">✏️</span>UPDATE</div>
+    <div class="code-block">
+<span class="cm">-- একটি row update</span>
+<span class="kw">UPDATE</span> users
+<span class="kw">SET</span> age = <span class="nm">26</span>, name = <span class="st">'Rahim Ali'</span>
+<span class="kw">WHERE</span> id = <span class="nm">1</span>;
+
+<span class="cm">-- অনেক row একসাথে</span>
+<span class="kw">UPDATE</span> products
+<span class="kw">SET</span> price = price * <span class="nm">1.1</span>   <span class="cm">-- 10% price বাড়াও</span>
+<span class="kw">WHERE</span> category_id = <span class="nm">3</span>;
+
+<span class="cm">-- CASE দিয়ে conditional update</span>
+<span class="kw">UPDATE</span> orders
+<span class="kw">SET</span> status = <span class="kw">CASE</span>
+  <span class="kw">WHEN</span> total &gt; <span class="nm">5000</span> <span class="kw">THEN</span> <span class="st">'premium'</span>
+  <span class="kw">WHEN</span> total &gt; <span class="nm">1000</span> <span class="kw">THEN</span> <span class="st">'regular'</span>
+  <span class="kw">ELSE</span> <span class="st">'basic'</span>
+<span class="kw">END</span>;
+    </div>
+    <div class="danger"><strong>⚠️ সাবধান:</strong> UPDATE এ WHERE না দিলে সব row update হবে!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗑️</span>DELETE</div>
+    <div class="code-block">
+<span class="cm">-- একটি row</span>
+<span class="kw">DELETE FROM</span> users <span class="kw">WHERE</span> id = <span class="nm">5</span>;
+
+<span class="cm">-- Condition দিয়ে</span>
+<span class="kw">DELETE FROM</span> users <span class="kw">WHERE</span> age &lt; <span class="nm">18</span>;
+
+<span class="cm">-- Subquery দিয়ে delete</span>
+<span class="kw">DELETE FROM</span> orders
+<span class="kw">WHERE</span> user_id <span class="kw">IN</span> (
+  <span class="kw">SELECT</span> id <span class="kw">FROM</span> users <span class="kw">WHERE</span> status = <span class="st">'banned'</span>
+);
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 5 — SELECT
+══════════════════════════════════════════════ -->
+<section class="section" id="select">
+  <div class="section-header">
+    <div class="section-label">05 / Beginner</div>
+    <div class="section-title">SELECT &amp; Filtering</div>
+    <div class="section-desc">Data পড়ার জন্য SELECT। এটাই সবচেয়ে বেশি ব্যবহৃত SQL command।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔍</span>SELECT এর পূর্ণ Syntax</div>
+    <div class="code-block">
+<span class="kw">SELECT</span>   column1, column2          <span class="cm">-- কোন column চাই</span>
+<span class="kw">FROM</span>     table_name               <span class="cm">-- কোন table থেকে</span>
+<span class="kw">WHERE</span>    condition                <span class="cm">-- filter</span>
+<span class="kw">GROUP BY</span> column                  <span class="cm">-- group করো</span>
+<span class="kw">HAVING</span>   group_condition         <span class="cm">-- group এর filter</span>
+<span class="kw">ORDER BY</span> column <span class="kw">ASC</span>/<span class="kw">DESC</span>         <span class="cm">-- sort করো</span>
+<span class="kw">LIMIT</span>    n <span class="kw">OFFSET</span> m;             <span class="cm">-- কতটুকু নেবো</span>
+    </div>
+    <div class="tip"><strong>💡 Execution order:</strong> FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span>WHERE Conditions</div>
+    <div class="code-block">
+<span class="cm">-- Basic comparison</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> age &gt; <span class="nm">25</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> name = <span class="st">'Rahim'</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> age != <span class="nm">30</span>;
+
+<span class="cm">-- AND / OR / NOT</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> age &gt; <span class="nm">20</span> <span class="kw">AND</span> age &lt; <span class="nm">40</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> city = <span class="st">'Dhaka'</span> <span class="kw">OR</span> city = <span class="st">'Chittagong'</span>;
+
+<span class="cm">-- BETWEEN (inclusive)</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> age <span class="kw">BETWEEN</span> <span class="nm">20</span> <span class="kw">AND</span> <span class="nm">30</span>;
+
+<span class="cm">-- IN</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> city <span class="kw">IN</span> (<span class="st">'Dhaka'</span>, <span class="st">'Chittagong'</span>, <span class="st">'Sylhet'</span>);
+
+<span class="cm">-- LIKE (pattern matching)</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> name <span class="kw">LIKE</span> <span class="st">'R%'</span>;    <span class="cm">-- R দিয়ে শুরু</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email <span class="kw">LIKE</span> <span class="st">'%gmail%'</span>; <span class="cm">-- gmail আছে</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> name <span class="kw">LIKE</span> <span class="st">'_ahim'</span>;   <span class="cm">-- _ = যেকোনো ১ char</span>
+
+<span class="cm">-- NULL check</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> phone <span class="kw">IS NULL</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> phone <span class="kw">IS NOT NULL</span>;
+
+<span class="cm">-- LIMIT &amp; OFFSET (pagination)</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">ORDER BY</span> id <span class="kw">LIMIT</span> <span class="nm">10</span> <span class="kw">OFFSET</span> <span class="nm">20</span>; <span class="cm">-- page 3</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span>DISTINCT, ORDER BY, ALIAS</div>
+    <div class="code-block">
+<span class="cm">-- DISTINCT — duplicate বাদ</span>
+<span class="kw">SELECT DISTINCT</span> city <span class="kw">FROM</span> users;
+
+<span class="cm">-- ORDER BY</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">ORDER BY</span> name <span class="kw">ASC</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">ORDER BY</span> age <span class="kw">DESC</span>, name <span class="kw">ASC</span>;
+
+<span class="cm">-- ALIAS (AS)</span>
+<span class="kw">SELECT</span> name <span class="kw">AS</span> full_name, age <span class="kw">AS</span> years <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> u.name, o.total <span class="kw">FROM</span> users u, orders o; <span class="cm">-- table alias</span>
+
+<span class="cm">-- String functions</span>
+<span class="kw">SELECT</span> <span class="fn">UPPER</span>(name), <span class="fn">LOWER</span>(email), <span class="fn">LENGTH</span>(name) <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">CONCAT</span>(first_name, <span class="st">' '</span>, last_name) <span class="kw">AS</span> full_name <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">SUBSTRING</span>(email, <span class="nm">1</span>, <span class="nm">5</span>) <span class="kw">FROM</span> users;
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 6 — JOINS
+══════════════════════════════════════════════ -->
+<section class="section" id="joins">
+  <div class="section-header">
+    <div class="section-label">06 / Intermediate</div>
+    <div class="section-title">JOINs</div>
+    <div class="section-desc">একাধিক table কে একসাথে query করার জন্য JOIN। Database এর সবচেয়ে গুরুত্বপূর্ণ concept।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔗</span>JOIN এর ধরন — Visual</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>JOIN Type</th><th>কী পাবো</th><th>NULL হয়?</th></tr>
+        <tr><td><code>INNER JOIN</code></td><td>দুই table এ match আছে এমন row</td><td>না</td></tr>
+        <tr><td><code>LEFT JOIN</code></td><td>Left table সব + Right এ match</td><td>Right এ NULL হতে পারে</td></tr>
+        <tr><td><code>RIGHT JOIN</code></td><td>Right table সব + Left এ match</td><td>Left এ NULL হতে পারে</td></tr>
+        <tr><td><code>FULL OUTER JOIN</code></td><td>দুই table এর সব row</td><td>দুই দিকেই NULL হতে পারে</td></tr>
+        <tr><td><code>CROSS JOIN</code></td><td>Cartesian product</td><td>না</td></tr>
+        <tr><td><code>SELF JOIN</code></td><td>Table নিজের সাথে join</td><td>—</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚡</span>INNER JOIN</div>
+    <p>দুই table এ common record — সবচেয়ে বেশি ব্যবহৃত।</p>
+    <div class="code-block">
+<span class="cm">-- Users এবং তাদের orders</span>
+<span class="kw">SELECT</span>
+  u.name,
+  u.email,
+  o.id     <span class="kw">AS</span> order_id,
+  o.total
+<span class="kw">FROM</span> users u
+<span class="kw">INNER JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id;
+
+<span class="cm">-- Result: শুধু যেসব user এর order আছে</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⬅️</span>LEFT JOIN</div>
+    <p>সব user দেখাবে, order না থাকলে NULL।</p>
+    <div class="code-block">
+<span class="kw">SELECT</span>
+  u.name,
+  o.id     <span class="kw">AS</span> order_id,
+  o.total
+<span class="kw">FROM</span> users u
+<span class="kw">LEFT JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id;
+
+<span class="cm">-- Result:</span>
+<span class="cm">-- Rahim  | 1 | 500</span>
+<span class="cm">-- Karim  | NULL | NULL  ← কোনো order নেই</span>
+<span class="cm">-- Sumon  | 2 | 1200</span>
+
+<span class="cm">-- Order নেই এমন user খোঁজা</span>
+<span class="kw">SELECT</span> u.name <span class="kw">FROM</span> users u
+<span class="kw">LEFT JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id
+<span class="kw">WHERE</span> o.id <span class="kw">IS NULL</span>;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔄</span>SELF JOIN</div>
+    <p>Employee table এ manager খোঁজা — একই table দুইবার।</p>
+    <div class="code-block">
+<span class="cm">-- employees table: id, name, manager_id</span>
+<span class="kw">SELECT</span>
+  e.name  <span class="kw">AS</span> employee,
+  m.name  <span class="kw">AS</span> manager
+<span class="kw">FROM</span> employees e
+<span class="kw">LEFT JOIN</span> employees m <span class="kw">ON</span> e.manager_id = m.id;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔀</span>3 Table JOIN</div>
+    <div class="code-block">
+<span class="cm">-- users → orders → products</span>
+<span class="kw">SELECT</span>
+  u.name,
+  p.name  <span class="kw">AS</span> product,
+  o.quantity,
+  o.total
+<span class="kw">FROM</span> users u
+<span class="kw">JOIN</span> orders o     <span class="kw">ON</span> u.id = o.user_id
+<span class="kw">JOIN</span> products p   <span class="kw">ON</span> o.product_id = p.id
+<span class="kw">WHERE</span> u.id = <span class="nm">1</span>;
+    </div>
+    <div class="tip"><strong>💡 মনে রাখো:</strong> JOIN এর সংখ্যা = table সংখ্যা - 1</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 7 — AGGREGATE
+══════════════════════════════════════════════ -->
+<section class="section" id="aggregate">
+  <div class="section-header">
+    <div class="section-label">07 / Intermediate</div>
+    <div class="section-title">Aggregate Functions</div>
+    <div class="section-desc">অনেক row এর উপর calculation করার জন্য — COUNT, SUM, AVG, MAX, MIN।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🧮</span>সব Aggregate Functions</div>
+    <div class="code-block">
+<span class="cm">-- COUNT — কয়টা row</span>
+<span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">FROM</span> users;                    <span class="cm">-- সব row</span>
+<span class="kw">SELECT</span> <span class="fn">COUNT</span>(phone) <span class="kw">FROM</span> users;               <span class="cm">-- NULL বাদে</span>
+<span class="kw">SELECT</span> <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> city) <span class="kw">FROM</span> users;      <span class="cm">-- unique city</span>
+
+<span class="cm">-- SUM — যোগফল</span>
+<span class="kw">SELECT</span> <span class="fn">SUM</span>(total) <span class="kw">FROM</span> orders;
+<span class="kw">SELECT</span> <span class="fn">SUM</span>(total) <span class="kw">FROM</span> orders <span class="kw">WHERE</span> status = <span class="st">'paid'</span>;
+
+<span class="cm">-- AVG — গড়</span>
+<span class="kw">SELECT</span> <span class="fn">AVG</span>(age) <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">ROUND</span>(<span class="fn">AVG</span>(price), <span class="nm">2</span>) <span class="kw">FROM</span> products;
+
+<span class="cm">-- MAX / MIN</span>
+<span class="kw">SELECT</span> <span class="fn">MAX</span>(price) <span class="kw">FROM</span> products;
+<span class="kw">SELECT</span> <span class="fn">MIN</span>(age), <span class="fn">MAX</span>(age) <span class="kw">FROM</span> users;
+
+<span class="cm">-- একসাথে</span>
+<span class="kw">SELECT</span>
+  <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_orders,
+  <span class="fn">SUM</span>(total) <span class="kw">AS</span> revenue,
+  <span class="fn">AVG</span>(total) <span class="kw">AS</span> avg_order,
+  <span class="fn">MAX</span>(total) <span class="kw">AS</span> biggest_order
+<span class="kw">FROM</span> orders;
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 8 — GROUP BY
+══════════════════════════════════════════════ -->
+<section class="section" id="groupby">
+  <div class="section-header">
+    <div class="section-label">08 / Intermediate</div>
+    <div class="section-title">GROUP BY &amp; HAVING</div>
+    <div class="section-desc">Data কে group করে aggregate calculation করার জন্য।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span>GROUP BY</div>
+    <div class="code-block">
+<span class="cm">-- প্রতি city তে কতজন user</span>
+<span class="kw">SELECT</span> city, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total
+<span class="kw">FROM</span> users
+<span class="kw">GROUP BY</span> city;
+
+<span class="cm">-- প্রতি category তে মোট sales</span>
+<span class="kw">SELECT</span>
+  c.name <span class="kw">AS</span> category,
+  <span class="fn">COUNT</span>(p.id) <span class="kw">AS</span> products,
+  <span class="fn">SUM</span>(o.total) <span class="kw">AS</span> total_sales
+<span class="kw">FROM</span> categories c
+<span class="kw">JOIN</span> products p <span class="kw">ON</span> c.id = p.category_id
+<span class="kw">JOIN</span> order_items o <span class="kw">ON</span> p.id = o.product_id
+<span class="kw">GROUP BY</span> c.id, c.name
+<span class="kw">ORDER BY</span> total_sales <span class="kw">DESC</span>;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span>HAVING — Group এর Filter</div>
+    <p>WHERE group এর আগে কাজ করে, HAVING group এর পরে।</p>
+    <div class="code-block">
+<span class="cm">-- ৩ এর বেশি order আছে এমন user</span>
+<span class="kw">SELECT</span> user_id, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> order_count
+<span class="kw">FROM</span> orders
+<span class="kw">GROUP BY</span> user_id
+<span class="kw">HAVING</span> order_count &gt; <span class="nm">3</span>;
+
+<span class="cm">-- মোট sales ১০০০০ এর বেশি এমন category</span>
+<span class="kw">SELECT</span> category_id, <span class="fn">SUM</span>(total) <span class="kw">AS</span> revenue
+<span class="kw">FROM</span> orders
+<span class="kw">GROUP BY</span> category_id
+<span class="kw">HAVING</span> revenue &gt; <span class="nm">10000</span>
+<span class="kw">ORDER BY</span> revenue <span class="kw">DESC</span>;
+    </div>
+    <div class="warn"><strong>⚡ WHERE vs HAVING:</strong> WHERE aggregate function ব্যবহার করতে পারে না। HAVING পারে। WHERE সব সময় GROUP BY এর আগে আসে।</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 9 — SUBQUERY
+══════════════════════════════════════════════ -->
+<section class="section" id="subquery">
+  <div class="section-header">
+    <div class="section-label">09 / Intermediate</div>
+    <div class="section-title">Subquery</div>
+    <div class="section-desc">Query এর ভেতরে আরেকটি query। Complex problem সমাধানের শক্তিশালী হাতিয়ার।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🪆</span>Subquery Types</div>
+    <div class="code-block">
+<span class="cm">── 1. WHERE এ Subquery</span>
+<span class="cm">-- সবচেয়ে বেশি দামি product</span>
+<span class="kw">SELECT</span> name, price <span class="kw">FROM</span> products
+<span class="kw">WHERE</span> price = (<span class="kw">SELECT MAX</span>(price) <span class="kw">FROM</span> products);
+
+<span class="cm">-- Average এর বেশি বয়স্ক user</span>
+<span class="kw">SELECT</span> name, age <span class="kw">FROM</span> users
+<span class="kw">WHERE</span> age &gt; (<span class="kw">SELECT AVG</span>(age) <span class="kw">FROM</span> users);
+
+<span class="cm">── 2. IN দিয়ে Subquery</span>
+<span class="cm">-- যেসব user order করেছে</span>
+<span class="kw">SELECT</span> name <span class="kw">FROM</span> users
+<span class="kw">WHERE</span> id <span class="kw">IN</span> (<span class="kw">SELECT DISTINCT</span> user_id <span class="kw">FROM</span> orders);
+
+<span class="cm">── 3. FROM এ Subquery (Derived Table)</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> (
+  <span class="kw">SELECT</span> user_id, <span class="fn">SUM</span>(total) <span class="kw">AS</span> spent
+  <span class="kw">FROM</span> orders
+  <span class="kw">GROUP BY</span> user_id
+) <span class="kw">AS</span> user_spending
+<span class="kw">WHERE</span> spent &gt; <span class="nm">5000</span>;
+
+<span class="cm">── 4. EXISTS</span>
+<span class="cm">-- কমপক্ষে একটি order আছে এমন user</span>
+<span class="kw">SELECT</span> name <span class="kw">FROM</span> users u
+<span class="kw">WHERE EXISTS</span> (
+  <span class="kw">SELECT</span> <span class="nm">1</span> <span class="kw">FROM</span> orders o
+  <span class="kw">WHERE</span> o.user_id = u.id
+);
+
+<span class="cm">── 5. Correlated Subquery (ধীরে কিন্তু powerful)</span>
+<span class="cm">-- প্রতি user এর সর্বোচ্চ order</span>
+<span class="kw">SELECT</span> u.name, o.total
+<span class="kw">FROM</span> orders o
+<span class="kw">JOIN</span> users u <span class="kw">ON</span> o.user_id = u.id
+<span class="kw">WHERE</span> o.total = (
+  <span class="kw">SELECT MAX</span>(total) <span class="kw">FROM</span> orders
+  <span class="kw">WHERE</span> user_id = o.user_id
+);
+    </div>
+    <div class="tip"><strong>💡 Performance tip:</strong> Correlated subquery প্রতিটি row এর জন্য run হয়। বড় data তে JOIN বা CTE ব্যবহার করো।</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 10 — CONSTRAINTS
+══════════════════════════════════════════════ -->
+<section class="section" id="constraints">
+  <div class="section-header">
+    <div class="section-label">10 / Intermediate</div>
+    <div class="section-title">Constraints &amp; Keys</div>
+    <div class="section-desc">Data integrity নিশ্চিত করার rules।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔑</span>সব Constraints</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Constraint</th><th>কাজ</th><th>Example</th></tr>
+        <tr><td><code>PRIMARY KEY</code></td><td>Unique + NOT NULL — row identify করে</td><td>id column</td></tr>
+        <tr><td><code>FOREIGN KEY</code></td><td>অন্য table এর PK reference করে</td><td>user_id</td></tr>
+        <tr><td><code>UNIQUE</code></td><td>Duplicate allow করে না</td><td>email</td></tr>
+        <tr><td><code>NOT NULL</code></td><td>Empty রাখা যাবে না</td><td>name</td></tr>
+        <tr><td><code>DEFAULT</code></td><td>Value না দিলে default ব্যবহার করে</td><td>status='active'</td></tr>
+        <tr><td><code>CHECK</code></td><td>Condition দিয়ে validate করে</td><td>age &gt;= 18</td></tr>
+      </tbody></table>
+    </div>
+    <div class="code-block">
+<span class="kw">CREATE TABLE</span> orders (
+  id         <span class="ty">INT</span>            <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+  user_id    <span class="ty">INT</span>            <span class="kw">NOT NULL</span>,
+  total      <span class="ty">DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>) <span class="kw">CHECK</span> (total &gt; <span class="nm">0</span>),
+  status     <span class="ty">ENUM</span>(<span class="st">'pending'</span>,<span class="st">'paid'</span>,<span class="st">'shipped'</span>) <span class="kw">DEFAULT</span> <span class="st">'pending'</span>,
+  created_at <span class="ty">TIMESTAMP</span>      <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>,
+
+  <span class="kw">CONSTRAINT</span> fk_order_user
+    <span class="kw">FOREIGN KEY</span> (user_id)
+    <span class="kw">REFERENCES</span> users(id)
+    <span class="kw">ON DELETE CASCADE</span>
+    <span class="kw">ON UPDATE CASCADE</span>
+);
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔗</span>Foreign Key Actions</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Action</th><th>Parent delete/update হলে Child এ কী হয়</th></tr>
+        <tr><td><code>CASCADE</code></td><td>Child ও delete/update হয়</td></tr>
+        <tr><td><code>SET NULL</code></td><td>Child এর FK NULL হয়</td></tr>
+        <tr><td><code>RESTRICT</code></td><td>Error দেয়, delete করতে দেয় না</td></tr>
+        <tr><td><code>NO ACTION</code></td><td>RESTRICT এর মতো (default)</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 11 — NORMALIZATION
+══════════════════════════════════════════════ -->
+<section class="section" id="normalization">
+  <div class="section-header">
+    <div class="section-label">11 / Intermediate</div>
+    <div class="section-title">Normalization</div>
+    <div class="section-desc">Database design এর নিয়ম — redundancy কমাও, integrity বাড়াও।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📐</span>Normal Forms</div>
+    <div class="card">
+      <h4>1NF — First Normal Form</h4>
+      <p>প্রতিটি cell এ একটাই value, কোনো repeating group নেই।</p>
+      <div class="grid2">
+        <div>
+          <div class="code-label">❌ 1NF নয়</div>
+          <div class="code-block">
+<span class="ty">id</span> | <span class="ty">name</span>  | <span class="ty">phones</span>
+<span class="nm">1</span>  | Rahim | <span class="st">017,018</span>  ← multiple!
+          </div>
+        </div>
+        <div>
+          <div class="code-label">✅ 1NF</div>
+          <div class="code-block">
+<span class="ty">id</span> | <span class="ty">name</span>  | <span class="ty">phone</span>
+<span class="nm">1</span>  | Rahim | <span class="st">017...</span>
+<span class="nm">1</span>  | Rahim | <span class="st">018...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>2NF — Second Normal Form</h4>
+      <p>1NF + Partial dependency নেই — Non-key column কে সম্পূর্ণ Primary Key এর উপর depend করতে হবে।</p>
+      <div class="tip"><strong>💡</strong> Composite PK থাকলে প্রাসঙ্গিক। PK শুধু একটি column হলে 2NF automatically satisfied।</div>
+      <div class="grid2">
+        <div>
+          <div class="code-label">❌ 2NF নয় (PK: order_id + product_id)</div>
+          <div class="code-block">
+order_id | product_id | qty | <span class="acc">product_name</span>
+         | ← product_name শুধু product_id এর উপর depend করে
+          </div>
+        </div>
+        <div>
+          <div class="code-label">✅ 2NF — আলাদা করো</div>
+          <div class="code-block">
+<span class="cm">-- order_items table</span>
+order_id | product_id | qty
+
+<span class="cm">-- products table</span>
+product_id | product_name
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>3NF — Third Normal Form</h4>
+      <p>2NF + Transitive dependency নেই — Non-key column অন্য non-key column এর উপর depend করতে পারবে না।</p>
+      <div class="grid2">
+        <div>
+          <div class="code-label">❌ 3NF নয়</div>
+          <div class="code-block">
+id | name | zip  | <span class="acc">city</span>
+city depends on zip, not on id
+          </div>
+        </div>
+        <div>
+          <div class="code-label">✅ 3NF</div>
+          <div class="code-block">
+<span class="cm">-- users: id, name, zip</span>
+<span class="cm">-- zip_codes: zip, city</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span>Normalization vs Denormalization</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>—</th><th>Normalization</th><th>Denormalization</th></tr>
+        <tr><td>Redundancy</td><td>কম</td><td>বেশি</td></tr>
+        <tr><td>Write speed</td><td>ভালো</td><td>ধীর</td></tr>
+        <tr><td>Read speed</td><td>JOIN লাগে, একটু ধীর</td><td>দ্রুত</td></tr>
+        <tr><td>কখন ব্যবহার</td><td>OLTP (transactions)</td><td>OLAP (analytics, reporting)</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 12 — INDEXING
+══════════════════════════════════════════════ -->
+<section class="section" id="index">
+  <div class="section-header">
+    <div class="section-label">12 / Advanced</div>
+    <div class="section-title">Indexing</div>
+    <div class="section-desc">Query কে rocket fast করার জন্য। Book এর index এর মতো — পুরো book না পড়েও page খুঁজে পাবে।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚡</span>Index তৈরি</div>
+    <div class="code-block">
+<span class="cm">-- Simple index</span>
+<span class="kw">CREATE INDEX</span> idx_email <span class="kw">ON</span> users(email);
+
+<span class="cm">-- Unique index</span>
+<span class="kw">CREATE UNIQUE INDEX</span> idx_unique_email <span class="kw">ON</span> users(email);
+
+<span class="cm">-- Composite index (column এর order গুরুত্বপূর্ণ)</span>
+<span class="kw">CREATE INDEX</span> idx_name_city <span class="kw">ON</span> users(name, city);
+
+<span class="cm">-- Index দেখা</span>
+<span class="kw">SHOW INDEX FROM</span> users;
+
+<span class="cm">-- Index মুছা</span>
+<span class="kw">DROP INDEX</span> idx_email <span class="kw">ON</span> users;
+
+<span class="cm">-- EXPLAIN দিয়ে index ব্যবহার হচ্ছে কিনা দেখো</span>
+<span class="kw">EXPLAIN SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email = <span class="st">'test@test.com'</span>;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span>Index কখন দেবো, কখন দেবো না</div>
+    <div class="grid2">
+      <div>
+        <div class="tip"><strong>✅ Index দাও যখন:</strong><br>
+        • WHERE তে বারবার ব্যবহার হয়<br>
+        • JOIN এ foreign key column<br>
+        • ORDER BY, GROUP BY column<br>
+        • UNIQUE দরকার<br>
+        • Read-heavy table</div>
+      </div>
+      <div>
+        <div class="danger"><strong>❌ Index দিও না যখন:</strong><br>
+        • Table ছোট (&lt; ১০০০ row)<br>
+        • Write-heavy table (INSERT/UPDATE slow হয়)<br>
+        • Low cardinality column (gender, status)<br>
+        • Rarely searched column</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🌳</span>Index এর ধরন</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Type</th><th>Description</th></tr>
+        <tr><td><code>B-Tree</code></td><td>Default। Range queries, sorting এর জন্য ভালো।</td></tr>
+        <tr><td><code>Hash</code></td><td>Exact match এর জন্য দ্রুত। Range query support করে না।</td></tr>
+        <tr><td><code>Full-Text</code></td><td>Text search এর জন্য (LIKE '%word%' slow — Full-Text fast)</td></tr>
+        <tr><td><code>Spatial</code></td><td>Geographic data (GPS coordinates)</td></tr>
+        <tr><td><code>Clustered</code></td><td>Data physically sorted করে রাখে (Primary Key)</td></tr>
+        <tr><td><code>Non-Clustered</code></td><td>Separate structure, pointer দিয়ে data খোঁজে</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 13 — VIEWS & CTE
+══════════════════════════════════════════════ -->
+<section class="section" id="views">
+  <div class="section-header">
+    <div class="section-label">13 / Advanced</div>
+    <div class="section-title">Views &amp; CTE</div>
+    <div class="section-desc">Complex query কে reusable এবং readable করার জন্য।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">👁️</span>VIEW — Virtual Table</div>
+    <p>একটি saved query — বারবার লিখতে হবে না, security layer হিসেবেও কাজ করে।</p>
+    <div class="code-block">
+<span class="cm">-- View তৈরি</span>
+<span class="kw">CREATE VIEW</span> active_users <span class="kw">AS</span>
+<span class="kw">SELECT</span> id, name, email, created_at
+<span class="kw">FROM</span> users
+<span class="kw">WHERE</span> status = <span class="st">'active'</span>;
+
+<span class="cm">-- View ব্যবহার (table এর মতো)</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> active_users;
+
+<span class="cm">-- Complex view</span>
+<span class="kw">CREATE VIEW</span> user_order_summary <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  u.id, u.name,
+  <span class="fn">COUNT</span>(o.id) <span class="kw">AS</span> total_orders,
+  <span class="fn">SUM</span>(o.total) <span class="kw">AS</span> total_spent
+<span class="kw">FROM</span> users u
+<span class="kw">LEFT JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id
+<span class="kw">GROUP BY</span> u.id, u.name;
+
+<span class="cm">-- View update/delete</span>
+<span class="kw">CREATE OR REPLACE VIEW</span> active_users <span class="kw">AS</span> ...;
+<span class="kw">DROP VIEW</span> active_users;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔗</span>CTE — Common Table Expression</div>
+    <p>Query এর মধ্যে temporary named result। View এর মতো কিন্তু শুধু ঐ query তেই কাজ করে।</p>
+    <div class="code-block">
+<span class="cm">-- Basic CTE</span>
+<span class="kw">WITH</span> high_spenders <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> user_id, <span class="fn">SUM</span>(total) <span class="kw">AS</span> spent
+  <span class="kw">FROM</span> orders
+  <span class="kw">GROUP BY</span> user_id
+  <span class="kw">HAVING</span> spent &gt; <span class="nm">10000</span>
+)
+<span class="kw">SELECT</span> u.name, hs.spent
+<span class="kw">FROM</span> users u
+<span class="kw">JOIN</span> high_spenders hs <span class="kw">ON</span> u.id = hs.user_id;
+
+<span class="cm">-- Multiple CTEs</span>
+<span class="kw">WITH</span>
+  monthly_sales <span class="kw">AS</span> (
+    <span class="kw">SELECT</span> <span class="fn">MONTH</span>(created_at) <span class="kw">AS</span> month, <span class="fn">SUM</span>(total) <span class="kw">AS</span> sales
+    <span class="kw">FROM</span> orders <span class="kw">GROUP BY</span> month
+  ),
+  avg_sales <span class="kw">AS</span> (
+    <span class="kw">SELECT AVG</span>(sales) <span class="kw">AS</span> avg <span class="kw">FROM</span> monthly_sales
+  )
+<span class="kw">SELECT</span> m.month, m.sales, a.avg
+<span class="kw">FROM</span> monthly_sales m, avg_sales a
+<span class="kw">WHERE</span> m.sales &gt; a.avg;
+
+<span class="cm">-- Recursive CTE (hierarchy)</span>
+<span class="kw">WITH RECURSIVE</span> emp_hierarchy <span class="kw">AS</span> (
+  <span class="cm">-- Base case: top manager</span>
+  <span class="kw">SELECT</span> id, name, manager_id, <span class="nm">0</span> <span class="kw">AS</span> level
+  <span class="kw">FROM</span> employees <span class="kw">WHERE</span> manager_id <span class="kw">IS NULL</span>
+
+  <span class="kw">UNION ALL</span>
+
+  <span class="cm">-- Recursive case</span>
+  <span class="kw">SELECT</span> e.id, e.name, e.manager_id, eh.level + <span class="nm">1</span>
+  <span class="kw">FROM</span> employees e
+  <span class="kw">JOIN</span> emp_hierarchy eh <span class="kw">ON</span> e.manager_id = eh.id
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> emp_hierarchy;
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 14 — TRANSACTIONS
+══════════════════════════════════════════════ -->
+<section class="section" id="transactions">
+  <div class="section-header">
+    <div class="section-label">14 / Advanced</div>
+    <div class="section-title">Transactions &amp; ACID</div>
+    <div class="section-desc">অনেকগুলো operation কে একটি unit হিসেবে execute করা — হয় সব হবে, না হয় কিছুই না।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🧪</span>ACID Properties</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Property</th><th>মানে কী</th><th>উদাহরণ</th></tr>
+        <tr><td><strong>A</strong>tomicity</td><td>সব হবে অথবা কিছুই না</td><td>Bank transfer — টাকা কাটলে অবশ্যই জমা হবে</td></tr>
+        <tr><td><strong>C</strong>onsistency</td><td>Data সবসময় valid state এ থাকবে</td><td>Balance কখনো negative হবে না</td></tr>
+        <tr><td><strong>I</strong>solation</td><td>একটি transaction অন্যটিকে affect করবে না</td><td>দুই জন একই account এ টাকা তুললেও ঠিক থাকবে</td></tr>
+        <tr><td><strong>D</strong>urability</td><td>Commit হলে permanently saved</td><td>Power চলে গেলেও data থাকবে</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">💳</span>Transaction Example</div>
+    <div class="code-block">
+<span class="cm">-- Bank transfer: A থেকে B তে 1000 টাকা</span>
+<span class="kw">START TRANSACTION</span>;
+
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance - <span class="nm">1000</span>
+<span class="kw">WHERE</span> id = <span class="nm">1</span>;  <span class="cm">-- A এর balance কমাও</span>
+
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance + <span class="nm">1000</span>
+<span class="kw">WHERE</span> id = <span class="nm">2</span>;  <span class="cm">-- B তে যোগ করো</span>
+
+<span class="cm">-- সব ঠিক থাকলে</span>
+<span class="kw">COMMIT</span>;
+
+<span class="cm">-- যেকোনো error হলে</span>
+<span class="kw">ROLLBACK</span>;
+
+<span class="cm">-- SAVEPOINT</span>
+<span class="kw">START TRANSACTION</span>;
+<span class="kw">INSERT INTO</span> orders ... ;
+<span class="kw">SAVEPOINT</span> order_placed;
+<span class="kw">INSERT INTO</span> payments ... ;
+<span class="kw">ROLLBACK TO SAVEPOINT</span> order_placed; <span class="cm">-- শুধু payment rollback</span>
+<span class="kw">COMMIT</span>;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🔒</span>Isolation Levels</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Level</th><th>Dirty Read</th><th>Non-Repeatable</th><th>Phantom Read</th></tr>
+        <tr><td><code>READ UNCOMMITTED</code></td><td>✅ হয়</td><td>✅</td><td>✅</td></tr>
+        <tr><td><code>READ COMMITTED</code></td><td>❌</td><td>✅ হয়</td><td>✅</td></tr>
+        <tr><td><code>REPEATABLE READ</code></td><td>❌</td><td>❌</td><td>✅ হয়</td></tr>
+        <tr><td><code>SERIALIZABLE</code></td><td>❌</td><td>❌</td><td>❌</td></tr>
+      </tbody></table>
+    </div>
+    <div class="tip"><strong>💡 Default:</strong> MySQL তে REPEATABLE READ। PostgreSQL তে READ COMMITTED।</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 15 — STORED PROCEDURES
+══════════════════════════════════════════════ -->
+<section class="section" id="stored">
+  <div class="section-header">
+    <div class="section-label">15 / Advanced</div>
+    <div class="section-title">Stored Procedures &amp; Functions</div>
+    <div class="section-desc">Database এ stored SQL code — বারবার call করতে পারবে।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📦</span>Stored Procedure</div>
+    <div class="code-block">
+<span class="cm">-- তৈরি</span>
+<span class="kw">DELIMITER</span> //
+
+<span class="kw">CREATE PROCEDURE</span> <span class="fn">GetUserOrders</span>(
+  <span class="kw">IN</span> p_user_id <span class="ty">INT</span>,
+  <span class="kw">OUT</span> p_total_orders <span class="ty">INT</span>
+)
+<span class="kw">BEGIN</span>
+  <span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">INTO</span> p_total_orders
+  <span class="kw">FROM</span> orders <span class="kw">WHERE</span> user_id = p_user_id;
+
+  <span class="kw">SELECT</span> id, total, status
+  <span class="kw">FROM</span> orders
+  <span class="kw">WHERE</span> user_id = p_user_id
+  <span class="kw">ORDER BY</span> created_at <span class="kw">DESC</span>;
+<span class="kw">END</span>//
+
+<span class="kw">DELIMITER</span> ;
+
+<span class="cm">-- Call করা</span>
+<span class="kw">CALL</span> <span class="fn">GetUserOrders</span>(<span class="nm">1</span>, @total);
+<span class="kw">SELECT</span> @total;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚙️</span>Function (RETURN value দেয়)</div>
+    <div class="code-block">
+<span class="kw">DELIMITER</span> //
+
+<span class="kw">CREATE FUNCTION</span> <span class="fn">GetDiscount</span>(price <span class="ty">DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>))
+<span class="kw">RETURNS DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>)
+<span class="kw">DETERMINISTIC</span>
+<span class="kw">BEGIN</span>
+  <span class="kw">DECLARE</span> discount <span class="ty">DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>);
+  <span class="kw">IF</span> price &gt; <span class="nm">10000</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> discount = price * <span class="nm">0.15</span>;
+  <span class="kw">ELSEIF</span> price &gt; <span class="nm">5000</span> <span class="kw">THEN</span>
+    <span class="kw">SET</span> discount = price * <span class="nm">0.10</span>;
+  <span class="kw">ELSE</span>
+    <span class="kw">SET</span> discount = price * <span class="nm">0.05</span>;
+  <span class="kw">END IF</span>;
+  <span class="kw">RETURN</span> discount;
+<span class="kw">END</span>//
+
+<span class="kw">DELIMITER</span> ;
+
+<span class="cm">-- ব্যবহার</span>
+<span class="kw">SELECT</span> name, price, <span class="fn">GetDiscount</span>(price) <span class="kw">AS</span> discount
+<span class="kw">FROM</span> products;
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 16 — TRIGGERS
+══════════════════════════════════════════════ -->
+<section class="section" id="triggers">
+  <div class="section-header">
+    <div class="section-label">16 / Advanced</div>
+    <div class="section-title">Triggers</div>
+    <div class="section-desc">কোনো event এ automatically execute হয় — audit log, validation, auto-update।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚡</span>Trigger Syntax</div>
+    <div class="code-block">
+<span class="cm">-- Trigger: order insert হলে stock কমাও</span>
+<span class="kw">CREATE TRIGGER</span> after_order_insert
+<span class="kw">AFTER INSERT ON</span> orders
+<span class="kw">FOR EACH ROW</span>
+<span class="kw">BEGIN</span>
+  <span class="kw">UPDATE</span> products
+  <span class="kw">SET</span> stock = stock - NEW.quantity
+  <span class="kw">WHERE</span> id = NEW.product_id;
+<span class="kw">END</span>;
+
+<span class="cm">-- Audit log trigger</span>
+<span class="kw">CREATE TRIGGER</span> user_update_log
+<span class="kw">BEFORE UPDATE ON</span> users
+<span class="kw">FOR EACH ROW</span>
+<span class="kw">BEGIN</span>
+  <span class="kw">INSERT INTO</span> audit_log(table_name, old_val, new_val, changed_at)
+  <span class="kw">VALUES</span>(<span class="st">'users'</span>, OLD.email, NEW.email, <span class="fn">NOW</span>());
+<span class="kw">END</span>;
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Timing</th><th>Event</th><th>OLD/NEW</th></tr>
+        <tr><td><code>BEFORE INSERT</code></td><td>Insert এর আগে</td><td>NEW আছে</td></tr>
+        <tr><td><code>AFTER INSERT</code></td><td>Insert এর পরে</td><td>NEW আছে</td></tr>
+        <tr><td><code>BEFORE UPDATE</code></td><td>Update এর আগে</td><td>OLD ও NEW আছে</td></tr>
+        <tr><td><code>AFTER DELETE</code></td><td>Delete এর পরে</td><td>OLD আছে</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 17 — WINDOW FUNCTIONS
+══════════════════════════════════════════════ -->
+<section class="section" id="window">
+  <div class="section-header">
+    <div class="section-label">17 / Advanced</div>
+    <div class="section-title">Window Functions</div>
+    <div class="section-desc">Row collapse না করে aggregate calculation করে — GROUP BY এর চেয়ে বেশি powerful।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🪟</span>Window Function Syntax</div>
+    <div class="code-block">
+<span class="fn">function_name</span>() <span class="kw">OVER</span> (
+  <span class="kw">PARTITION BY</span> column    <span class="cm">-- group তৈরি</span>
+  <span class="kw">ORDER BY</span> column        <span class="cm">-- sort</span>
+  <span class="kw">ROWS BETWEEN</span> ...       <span class="cm">-- frame define</span>
+)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📈</span>Ranking Functions</div>
+    <div class="code-block">
+<span class="cm">-- ROW_NUMBER: unique sequential number</span>
+<span class="kw">SELECT</span>
+  name,
+  salary,
+  <span class="fn">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> rank
+<span class="kw">FROM</span> employees;
+
+<span class="cm">-- RANK: same value → same rank, gap তৈরি হয়</span>
+<span class="cm">-- DENSE_RANK: same value → same rank, gap নেই</span>
+<span class="kw">SELECT</span> name, score,
+  <span class="fn">RANK</span>()       <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> score <span class="kw">DESC</span>) <span class="kw">AS</span> rank,
+  <span class="fn">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> score <span class="kw">DESC</span>) <span class="kw">AS</span> dense_rank
+<span class="kw">FROM</span> students;
+<span class="cm">-- Score: 90, 90, 80
+-- RANK:      1,  1,  3  ← gap আছে
+-- DENSE_RANK:1,  1,  2  ← gap নেই</span>
+
+<span class="cm">-- NTILE: n ভাগে ভাগ করো</span>
+<span class="kw">SELECT</span> name, salary,
+  <span class="fn">NTILE</span>(<span class="nm">4</span>) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary) <span class="kw">AS</span> quartile
+<span class="kw">FROM</span> employees;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🧮</span>Analytic Functions</div>
+    <div class="code-block">
+<span class="cm">-- LAG / LEAD: আগের/পরের row এর value</span>
+<span class="kw">SELECT</span>
+  month,
+  sales,
+  <span class="fn">LAG</span>(sales) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> month) <span class="kw">AS</span> prev_month,
+  sales - <span class="fn">LAG</span>(sales) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> month) <span class="kw">AS</span> growth
+<span class="kw">FROM</span> monthly_sales;
+
+<span class="cm">-- SUM OVER PARTITION: group এর মধ্যে running total</span>
+<span class="kw">SELECT</span>
+  department,
+  name,
+  salary,
+  <span class="fn">SUM</span>(salary) <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> department) <span class="kw">AS</span> dept_total,
+  <span class="fn">AVG</span>(salary) <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> department) <span class="kw">AS</span> dept_avg
+<span class="kw">FROM</span> employees;
+
+<span class="cm">-- Running total</span>
+<span class="kw">SELECT</span>
+  created_at,
+  total,
+  <span class="fn">SUM</span>(total) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> created_at) <span class="kw">AS</span> running_total
+<span class="kw">FROM</span> orders;
+
+<span class="cm">-- প্রতি department এ top earner</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> (
+  <span class="kw">SELECT</span> *,
+    <span class="fn">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> dept <span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> rn
+  <span class="kw">FROM</span> employees
+) t <span class="kw">WHERE</span> rn = <span class="nm">1</span>;
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 18 — SQL vs NoSQL
+══════════════════════════════════════════════ -->
+<section class="section" id="nosql">
+  <div class="section-header">
+    <div class="section-label">18 / Advanced</div>
+    <div class="section-title">SQL vs NoSQL</div>
+    <div class="section-desc">কোন database কখন ব্যবহার করবো — সিদ্ধান্ত নেওয়ার framework।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span>তুলনা</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>—</th><th>SQL (Relational)</th><th>NoSQL</th></tr>
+        <tr><td>Schema</td><td>Fixed, strict</td><td>Flexible, dynamic</td></tr>
+        <tr><td>Scaling</td><td>Vertical (বড় server)</td><td>Horizontal (অনেক server)</td></tr>
+        <tr><td>ACID</td><td>✅ পূর্ণ support</td><td>⚠️ সীমিত (BASE)</td></tr>
+        <tr><td>Query language</td><td>SQL (standardized)</td><td>Database specific</td></tr>
+        <tr><td>Joins</td><td>✅ সহজ</td><td>❌ কঠিন/নেই</td></tr>
+        <tr><td>কখন ব্যবহার</td><td>Financial, ERP, structured</td><td>Social, IoT, real-time, large scale</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🍃</span>CAP Theorem</div>
+    <p>Distributed system এ এই তিনটির যেকোনো দুটি পাওয়া যায়, তিনটি একসাথে নয়:</p>
+    <div class="grid2">
+      <div>
+        <div class="tip"><strong style="color:#00e5ff">C — Consistency:</strong> সব node একই data দেখায়</div>
+        <div class="tip"><strong style="color:#10b981">A — Availability:</strong> সবসময় response পাবো</div>
+        <div class="tip"><strong style="color:#a78bfa">P — Partition Tolerance:</strong> Network ভেঙে গেলেও কাজ করে</div>
+      </div>
+      <div>
+        <div class="warn"><strong>MySQL/PostgreSQL:</strong> CA (Partition সহ্য করতে পারে না)</div>
+        <div class="warn"><strong>MongoDB:</strong> CP (Consistency + Partition)</div>
+        <div class="warn"><strong>Cassandra:</strong> AP (Availability + Partition)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">🗺️</span>কোনটা কখন বেছে নেবো</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Project type</th><th>Best choice</th><th>কেন</th></tr>
+        <tr><td>E-commerce, Banking</td><td>PostgreSQL/MySQL</td><td>ACID, Relations দরকার</td></tr>
+        <tr><td>Social media, Content</td><td>MongoDB</td><td>Flexible schema, rapid change</td></tr>
+        <tr><td>Cache, Session</td><td>Redis</td><td>In-memory, super fast</td></tr>
+        <tr><td>Analytics, Reporting</td><td>ClickHouse/BigQuery</td><td>Column store, fast aggregation</td></tr>
+        <tr><td>IoT, Time-series</td><td>InfluxDB, TimescaleDB</td><td>Optimized for time data</td></tr>
+        <tr><td>Search</td><td>Elasticsearch</td><td>Full-text, distributed</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 19 — INTERVIEW
+══════════════════════════════════════════════ -->
+<section class="section" id="interview">
+  <div class="section-header">
+    <div class="section-label">19 / Interview Ready</div>
+    <div class="section-title">⚡ Interview Q&amp;A</div>
+    <div class="section-desc">সবচেয়ে বেশি জিজ্ঞেস করা প্রশ্ন এবং perfect উত্তর।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q1. DELETE vs TRUNCATE vs DROP এর পার্থক্য?</div>
+    <div class="tip"><strong>উত্তর:</strong> DELETE DML — condition দিয়ে specific row মোছে, transaction log রাখে তাই rollback সম্ভব। TRUNCATE DDL — সব row মোছে কিন্তু structure রাখে, log রাখে না তাই দ্রুত কিন্তু rollback হয় না। DROP DDL — পুরো table structure সহ মুছে ফেলে।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q2. INNER JOIN vs LEFT JOIN এর পার্থক্য?</div>
+    <div class="tip"><strong>উত্তর:</strong> INNER JOIN শুধু দুই table এ match আছে এমন row দেয়। LEFT JOIN বাম table এর সব row দেয়, ডান table এ match না থাকলে NULL আসে। উদাহরণ: সব user দেখাতে চাইলে LEFT JOIN, শুধু order করা user দেখাতে চাইলে INNER JOIN।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q3. Index কী এবং কখন ব্যবহার করবো?</div>
+    <div class="tip"><strong>উত্তর:</strong> Index হলো database এর lookup table যা data খোঁজা দ্রুত করে। B-Tree structure ব্যবহার করে। WHERE, JOIN, ORDER BY column এ index দিলে read fast হয়। কিন্তু index INSERT/UPDATE slow করে কারণ index ও update করতে হয়। Low cardinality column (gender) এ index অকেজো।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q4. ACID কী? প্রতিটি explain করো।</div>
+    <div class="tip"><strong>উত্তর:</strong> Atomicity — transaction এর সব operation হবে নয়তো কিছুই না। Consistency — transaction শেষে data valid state এ থাকবে। Isolation — concurrent transaction গুলো একে অপরকে affect করবে না। Durability — commit হলে data permanently saved, system failure এও টিকবে।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q5. Normalization এর লক্ষ্য কী? 1NF, 2NF, 3NF explain করো।</div>
+    <div class="tip"><strong>উত্তর:</strong> Redundancy কমানো এবং data integrity বাড়ানো। 1NF: প্রতি cell এ একটি value, কোনো repeating group নয়। 2NF: 1NF + Partial dependency নেই (সব non-key column সম্পূর্ণ PK এর উপর depend করে)। 3NF: 2NF + Transitive dependency নেই (non-key column অন্য non-key column এর উপর depend করে না)।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q6. WHERE vs HAVING পার্থক্য?</div>
+    <div class="tip"><strong>উত্তর:</strong> WHERE GROUP BY এর আগে কাজ করে, individual row filter করে, aggregate function ব্যবহার করতে পারে না। HAVING GROUP BY এর পরে কাজ করে, grouped result filter করে, aggregate function ব্যবহার করতে পারে। যেমন: "১০ এর বেশি order আছে এমন user" — এটা HAVING দিয়ে করতে হবে।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q7. Window Function vs GROUP BY পার্থক্য?</div>
+    <div class="tip"><strong>উত্তর:</strong> GROUP BY row collapse করে — ফলে original row এর detail হারিয়ে যায়। Window Function row collapse করে না — প্রতিটি row থাকে কিন্তু সাথে aggregate value যোগ হয়। যেমন প্রতিটি employee এর salary এবং সাথে department এর average salary দেখাতে Window Function লাগবে।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Q8. View কী? Stored Procedure এর সাথে পার্থক্য?</div>
+    <div class="tip"><strong>উত্তর:</strong> View হলো stored SELECT query — virtual table, data store করে না। Stored Procedure হলো stored executable code — parameter নিতে পারে, DML করতে পারে, logic লেখা যায়। View শুধু SELECT, Procedure INSERT/UPDATE/DELETE সব করতে পারে।</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏆 Top Practice Problems</div>
+    <div class="code-block">
+<span class="cm">-- 1. Nth highest salary</span>
+<span class="kw">SELECT</span> salary <span class="kw">FROM</span> employees
+<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="nm">1</span> <span class="kw">OFFSET</span> <span class="nm">2</span>; <span class="cm">-- 3rd highest</span>
+
+<span class="cm">-- 2. Duplicate rows খোঁজা</span>
+<span class="kw">SELECT</span> email, <span class="fn">COUNT</span>(*) <span class="kw">FROM</span> users
+<span class="kw">GROUP BY</span> email <span class="kw">HAVING</span> <span class="fn">COUNT</span>(*) &gt; <span class="nm">1</span>;
+
+<span class="cm">-- 3. Self JOIN — Manager খোঁজা</span>
+<span class="kw">SELECT</span> e.name <span class="kw">AS</span> emp, m.name <span class="kw">AS</span> manager
+<span class="kw">FROM</span> emp e <span class="kw">JOIN</span> emp m <span class="kw">ON</span> e.mgr_id = m.id;
+
+<span class="cm">-- 4. প্রতি month এ sales</span>
+<span class="kw">SELECT</span>
+  <span class="fn">YEAR</span>(created_at) yr, <span class="fn">MONTH</span>(created_at) mo,
+  <span class="fn">SUM</span>(total) <span class="kw">AS</span> revenue
+<span class="kw">FROM</span> orders
+<span class="kw">GROUP BY</span> yr, mo <span class="kw">ORDER BY</span> yr, mo;
+
+<span class="cm">-- 5. Order না করা user</span>
+<span class="kw">SELECT</span> u.name <span class="kw">FROM</span> users u
+<span class="kw">LEFT JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id
+<span class="kw">WHERE</span> o.id <span class="kw">IS NULL</span>;
+
+<span class="cm">-- 6. Running total</span>
+<span class="kw">SELECT</span> date, amount,
+  <span class="fn">SUM</span>(amount) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> date) <span class="kw">AS</span> running
+<span class="kw">FROM</span> sales;
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📌 Quick Reference Cheatsheet</div>
+    <div class="table-wrap">
+      <table>
+        <tbody><tr><th>Topic</th><th>Key Point</th></tr>
+        <tr><td>Execution Order</td><td>FROM→JOIN→WHERE→GROUP BY→HAVING→SELECT→ORDER BY→LIMIT</td></tr>
+        <tr><td>NULL comparison</td><td>= NULL কাজ করে না, IS NULL লিখতে হবে</td></tr>
+        <tr><td>Primary Key</td><td>UNIQUE + NOT NULL + একটি table এ একটিই</td></tr>
+        <tr><td>Foreign Key</td><td>অন্য table এর PK কে reference করে</td></tr>
+        <tr><td>Index tradeoff</td><td>Read fast ↑, Write slow ↓, Storage ↑</td></tr>
+        <tr><td>CHAR vs VARCHAR</td><td>CHAR fixed size, VARCHAR dynamic — VARCHAR efficient</td></tr>
+        <tr><td>UNION</td><td>Duplicate সরায়। UNION ALL রাখে — faster</td></tr>
+        <tr><td>RANK vs DENSE_RANK</td><td>RANK gap তৈরি করে, DENSE_RANK করে না</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+
+
+</body></html>
