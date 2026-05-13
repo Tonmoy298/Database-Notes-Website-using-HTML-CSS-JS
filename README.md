@@ -3,8 +3,7 @@
 A complete Database reference website built with pure HTML, CSS & JavaScript. Covers Beginner to Advanced topics with examples.
 
 ## 🔗 Live Demo
-[👉 Click here to view the website](https://tonmoy298.github.io/Database-Notes-Website-using-HTML-CSS-JS/)
-
+[👉 Click here to view the website]https://tonmoy298.github.io/Database-Notes-Website-using-HTML-CSS-JS/
 ## 📌 Topics Covered
 | Category | Topics |
 |----------|--------|
